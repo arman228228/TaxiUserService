@@ -1,0 +1,7 @@
+﻿services:
+  taxiusers:
+    image: taxiusers
+    build:
+      context: .
+      dockerfile: TaxiUsers/Dockerfile
+
