@@ -1,26 +1,37 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserController : ControllerBase
+public class DriverController : ControllerBase
 {
-    private readonly IUserService _userService;
+    private readonly IDriverService _driverService;
 
-    public UserController(IUserService userService)
+    public DriverController(IDriverService driverService)
     {
-        _userService = userService;
+        _driverService = driverService;
     }
 
+    [Authorize]
     [HttpPost("register")]
-    public async Task<IActionResult> RegisterAsync(UserDto user)
+    public async Task<IActionResult> RegisterAsync(DriverDto user)
     {
-        var createdUser = await _userService.CreateAsync(user);
-        if (createdUser == 0) return BadRequest();
+        var createdDriver = await _driverService.CreateAsync(user);
+        if (createdDriver == 0) return BadRequest();
 
-        return Ok(createdUser);
+        return Ok(createdDriver);
+    }
+    
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetByIdAsync(int id)
+    {
+        var driver = await _driverService.GetByIdAsync(id);
+        if (driver == null) return NotFound();
+
+        return Ok(driver);
     }
 }

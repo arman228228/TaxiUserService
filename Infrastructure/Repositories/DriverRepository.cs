@@ -5,29 +5,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
-public class UserRepository : IUserRepository
+public class DriverRepository : IDriverRepository
 {
     private readonly AppDbContext _context;
 
-    public UserRepository(AppDbContext context)
+    public DriverRepository(AppDbContext context)
     {
         _context = context;
     }
 
-    public async Task<User> CreateAsync(User user)
+    public async Task<Driver> CreateAsync(Driver driver)
     {
-        await _context.Users.AddAsync(user);
+        await _context.Drivers.AddAsync(driver);
         await _context.SaveChangesAsync();
-        return user;
-    }
-
-    public async Task<User?> GetByEmailAsync(string email)
-    {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        return driver;
     }
     
-    public async Task<User?> GetByIdAsync(int id)
+    public async Task<Driver?> GetByIdAsync(int id)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+        return await _context.Drivers.FirstOrDefaultAsync(d => d.Id == id);
     }
 }

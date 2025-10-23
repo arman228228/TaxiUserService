@@ -4,11 +4,11 @@ using Domain.Entities;
 
 namespace Application.Mapping;
 
-public class UserProfile : Profile
+public class DriverProfile : Profile
 {
-    public UserProfile()
+    public DriverProfile()
     {
-        CreateMap<UserDto, User>();
-        CreateMap<User, UserDto>();
+        CreateMap<DriverDto, Driver>();
+        CreateMap<Driver, DriverDto>();
     }
 }

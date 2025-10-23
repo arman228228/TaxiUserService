@@ -13,4 +13,8 @@ public class User
     [Required]
     [MaxLength(16)]
     public string Password { get; set; }
+    
+    [Required]
+    [MaxLength(16)]
+    public string Email { get; set; }
 }

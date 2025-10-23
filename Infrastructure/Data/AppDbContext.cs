@@ -11,12 +11,19 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<User> Users { get; set; }
+    public DbSet<Driver> Drivers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>(ride =>
+        modelBuilder.Entity<User>(user =>
         {
-            ride.HasKey(r => r.Id);
+            user.HasKey(u => u.Id);
+            
+        });
+        
+        modelBuilder.Entity<Driver>(driver =>
+        {
+            driver.HasKey(d => d.Id);
         });
     }
 }

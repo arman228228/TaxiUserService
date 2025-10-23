@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers;
@@ -18,7 +19,18 @@ public class UserController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> RegisterAsync(UserDto user)
     {
-        await _userService.CreateAsync(user);
-        return Ok();
+        var createdUser = await _userService.CreateAsync(user);
+        if (createdUser == 0) return BadRequest();
+
+        return Ok(createdUser);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetByIdAsync(int id)
+    {
+        var user = await _userService.GetByIdAsync(id);
+        if (user == null) return NotFound();
+
+        return Ok(user);
     }
 }

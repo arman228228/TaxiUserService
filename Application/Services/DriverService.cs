@@ -5,24 +5,35 @@ using Domain.Entities;
 
 namespace Application.Services;
 
-public class UserService : IUserService
+public class DriverService : IDriverService
 {
+    private readonly IDriverRepository _driverRepository;
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
 
-    public UserService(IUserRepository userRepository, IMapper mapper)
+    public DriverService(IDriverRepository driverRepository, IUserRepository userRepository, IMapper mapper)
     {
+        _driverRepository = driverRepository;
         _userRepository = userRepository;
         _mapper = mapper;
     }
 
-    public async Task<int> CreateAsync(UserDto userDto)
+    public async Task<int> CreateAsync(DriverDto driverDto)
     {
-        var existByEmail = await _userRepository.GetByEmailAsync(userDto.Email);
-        if (existByEmail != null) return 0;
+        var driver = _mapper.Map<Driver>(driverDto);
         
-        var user = _mapper.Map<User>(userDto);
-        var created  = await _userRepository.CreateAsync(user);
+        var user = await _userRepository.GetByIdAsync(driverDto.UserId);
+        if (user == null) return 0;
+        
+        driver.User = user;
+        var created = await _driverRepository.CreateAsync(driver);
         return created.Id;
+    }
+
+    public async Task<DriverDto?> GetByIdAsync(int id)
+    {
+        var driver = await _driverRepository.GetByIdAsync(id);
+        if (driver == null) return null;
+        return _mapper.Map<DriverDto>(driver);
     }
 }

@@ -2,13 +2,10 @@
 
 namespace Application.DTOs;
 
-public class LoginDto
+public class LoginResponseDto
 {
-    [Required]
-    [MaxLength(64)]
+    public string Token { get; set; }
+    public int UserId { get; set; }
+    public string Name { get; set; }
     public string Email { get; set; }
-    
-    [Required]
-    [MaxLength(16)]
-    public string Password { get; set; }
 }

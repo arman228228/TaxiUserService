@@ -2,9 +2,8 @@
 
 namespace Application.Interfaces;
 
-public interface IUserRepository
+public interface IDriverRepository
 {
-    Task<User> CreateAsync(User user);
-    Task<User?> GetByEmailAsync(string email);
-    Task<User?> GetByIdAsync(int id);
+    Task<Driver> CreateAsync(Driver user);
+    Task<Driver?> GetByIdAsync(int id);
 }

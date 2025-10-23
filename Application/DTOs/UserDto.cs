@@ -11,4 +11,8 @@ public class UserDto
     [Required]
     [MaxLength(16)]
     public string Password { get; set; }
+    
+    [Required]
+    [MaxLength(64)]
+    public string Email { get; set; }
 }

@@ -2,7 +2,8 @@
 
 namespace Application.Interfaces;
 
-public interface IUserService
+public interface IDriverService
 {
-    Task<int> CreateAsync(UserDto user);
+    Task<int> CreateAsync(DriverDto user);
+    Task<DriverDto?> GetByIdAsync(int id);
 }

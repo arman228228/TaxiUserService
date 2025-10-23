@@ -18,8 +18,25 @@ public class UserService : IUserService
 
     public async Task<int> CreateAsync(UserDto userDto)
     {
+        var existByEmail = await _userRepository.GetByEmailAsync(userDto.Email);
+        if (existByEmail != null) return 0;
+        
         var user = _mapper.Map<User>(userDto);
         var created  = await _userRepository.CreateAsync(user);
         return created.Id;
+    }
+    
+    public async Task<UserDto?> GetByIdAsync(int id)
+    {
+        var user = await _userRepository.GetByIdAsync(id);
+        if (user == null) return null;
+        return _mapper.Map<UserDto>(user);
+    }
+    
+    public async Task<UserDto?> GetByEmailAsync(string email)
+    {
+        var user = await _userRepository.GetByEmailAsync(email);
+        if (user == null) return null;
+        return _mapper.Map<UserDto>(user);
     }
 }
